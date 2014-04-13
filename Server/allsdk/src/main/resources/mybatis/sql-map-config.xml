@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<settings>
+		<setting name="lazyLoadingEnabled" value="false" />
+	</settings>
+
+	<typeAliases>
+<!-- 		<typeAlias alias="CatBean" type="com.meilime.bean.CatBean" /> -->
+	</typeAliases>
+	
+	<typeHandlers>
+<!--         <typeHandler javaType="com.qunar.flight.tts.qdh.pojo.GiftTypes"
+                     handler="com.qunar.flight.tts.qdh.support.GiftTypesEnumHandler"/>   -->
+    </typeHandlers>
+
+	<mappers>
+<!-- 		<mapper resource="mybatis/mapping/category.xml" /> -->
+	</mappers>
+
+</configuration>
