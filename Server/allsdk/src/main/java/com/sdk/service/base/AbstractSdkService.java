@@ -22,11 +22,10 @@ public abstract class AbstractSdkService {
 	
     public abstract Map<String, String> goPay(HttpServletRequest request);
     
-    public abstract boolean sdkPayNotify(HttpServletRequest request);
-	    
+    public abstract boolean payResultNotify(String game, String platform, HttpServletRequest request);
+
     public abstract boolean refund(PayNotifyBean bean);
-	
-	
+
 	public InheritableThreadLocal<String> getOrderNo() {
 		return orderNo;
 	}

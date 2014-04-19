@@ -13,7 +13,7 @@
 
     <context:property-placeholder location="classpath*:common-config.properties,classpath*:*.properties,classpath:config-override.properties" />
 
-    <import resource="db-context.xml" />
+    <!--import resource="db-context.xml" /-->
 
     <context:component-scan base-package="com.sdk">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />

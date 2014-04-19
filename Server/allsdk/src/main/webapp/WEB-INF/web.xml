@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:javaee="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" version="2.4">
-  <javaee:display-name>All SDK</javaee:display-name>
+  <display-name>All SDK</display-name>
   <context-param>
-    <javaee:param-name>contextConfigLocation</javaee:param-name>
-    <javaee:param-value>classpath:spring/spring.xml</javaee:param-value>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath:spring/spring.xml</param-value>
   </context-param>
   <context-param>
-    <javaee:param-name>defaultHtmlEscape</javaee:param-name>
-    <javaee:param-value>true</javaee:param-value>
+    <param-name>defaultHtmlEscape</param-name>
+    <param-value>true</param-value>
   </context-param>
   <servlet>
     <servlet-name>springmvc</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <init-param>
-      <javaee:param-name>contextConfigLocation</javaee:param-name>
-      <javaee:param-value>classpath:spring/springmvc-servlet.xml</javaee:param-value>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath:spring/springmvc-servlet.xml</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
@@ -23,29 +23,29 @@
     <url-pattern>/</url-pattern>
   </servlet-mapping>
   <listener>
-    <javaee:listener-class>org.springframework.web.context.ContextLoaderListener</javaee:listener-class>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
   <listener>
-    <javaee:listener-class>org.springframework.web.context.request.RequestContextListener</javaee:listener-class>
+    <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
   </listener>
   <listener>
-    <javaee:listener-class>com.meilime.listener.StartListener</javaee:listener-class>
+    <listener-class>com.sdk.listener.StartListener</listener-class>
   </listener>
   <filter>
     <filter-name>characterEncodingFilter</filter-name>
     <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
     <init-param>
-      <javaee:param-name>encoding</javaee:param-name>
-      <javaee:param-value>UTF-8</javaee:param-value>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
     </init-param>
     <init-param>
-      <javaee:param-name>forceEncoding</javaee:param-name>
-      <javaee:param-value>true</javaee:param-value>
+      <param-name>forceEncoding</param-name>
+      <param-value>true</param-value>
     </init-param>
   </filter>
   <filter>
     <filter-name>UserTraceFilter</filter-name>
-    <filter-class>com.meilime.servlet.UserTraceFilter</filter-class>
+    <filter-class>com.sdk.servlet.UserTraceFilter</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>characterEncodingFilter</filter-name>

@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -27,11 +28,20 @@ public class LoginController {
 
     @Resource
     private SdkServiceFactory sdkServiceFactory;
-	
-    @RequestMapping("/{platCode}/login.html")
+
+    /**
+     *
+     * @param gameID  用于区分不同游戏款式
+     * @param platCode  用于游戏平台区分
+     * @param request   请求
+     * @param response
+     * @return
+     */
+    @RequestMapping("/{gameID}/{platCode}/login.html")
     @ResponseBody
-	public Map<String, Object> login(@PathVariable(value = "platCode") String platCode, 
-			HttpServletRequest request, HttpServletResponse response){
+	public Map<String, Object> login(@PathVariable(value = "gameID") String gameID,
+                                     @PathVariable(value = "platCode") String platCode,
+                                     HttpServletRequest request, HttpServletResponse response){
 		Map<String, Object> result = new HashMap<String, Object>();
 		PlatformAPIType apiType = PlatformAPIType.fromPrefix(platCode);
 		try{
@@ -39,23 +49,24 @@ public class LoginController {
 	        LoginResult loginResult = service.login(request);
 	        //判断loginResult成功与否情况
 	        
-	        //融合gameserver个人信息结果，getUserInfo
+	        //融合gameserver个人信息结果，getUserInfo，需要根据platCode与gameid（game）
 
-	        
 	        result.put("ret", "success");
-			result.put("", "");
+			result.put("info", new Gson().toJson(loginResult));
 		}catch(Exception e){
 			logger.error("SDK Server Login ERROR.", e);
 			result.put("ret", "failed");
 			result.put("errmsg", "sdk server login error");
 		}
+        logger.info("result:{}", result);
 		return result;
     }
     
-    @RequestMapping("/{platCode}/logout.html")
+    @RequestMapping("/{gameID}/{platCode}/logout.html")
     @ResponseBody
-	public Map<String, Object> logout(@PathVariable(value = "platCode") String platCode, 
-			HttpServletRequest request, HttpServletResponse response){
+	public Map<String, Object> logout(@PathVariable(value = "gameID") String gameID,
+                                      @PathVariable(value = "platCode") String platCode,
+                                      HttpServletRequest request, HttpServletResponse response){
 		Map<String, Object> result = new HashMap<String, Object>();
 		PlatformAPIType apiType = PlatformAPIType.fromPrefix(platCode);
 		try{
@@ -66,7 +77,7 @@ public class LoginController {
 	        //融合gameserver个人信息结果，getUserInfo
 	        
 			result.put("ret", "success");
-			result.put("", "");
+            result.put("errmsg", "");
 		}catch(Exception e){
 			logger.error("SDK Server Logout ERROR.", e);
 			result.put("ret", "failed");

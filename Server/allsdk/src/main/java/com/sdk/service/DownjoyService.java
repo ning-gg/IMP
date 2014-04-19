@@ -5,8 +5,6 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import net.sf.json.JSONObject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -47,13 +45,15 @@ public class DownjoyService extends AbstractSdkService {
 		String mid = request.getParameter("mid");
 		String token = request.getParameter("token");
 		StringBuilder builder = new StringBuilder();
-		builder.append("app_id").append(appid)
-				.append("mid").append(mid)
-				.append("token").append(token);
+		builder.append("app_id=").append(appid)
+				.append("&mid=").append(mid)
+				.append("&token=").append(token);
 		String sign = MD5Util.md5(token+"|"+appkey);
-		builder.append("sig").append(sign);
+		builder.append("&sig=").append(sign);
 		try{
+            logger.info("request param:{}", builder.toString());
 			String response = HttpUtil.getFromInputStream(sdkServerUrl+"?"+builder.toString(), true);
+            logger.info("response:{}", response);//print reponse
 			//解析登录结果
 			JSONObject json = JSONObject.fromObject(response);
 	        if(json!=null) {//登录信息
@@ -80,7 +80,7 @@ public class DownjoyService extends AbstractSdkService {
 	}
 
 	@Override
-	public boolean sdkPayNotify(HttpServletRequest request) {
+	public boolean payResultNotify(String game, String platform, HttpServletRequest request) {
 		try{
 			String result = request.getParameter("result");//支付结果，固定值。“1”代表成功，“0”代表失败
 			String money = request.getParameter("money");//支付金额，单位：元。
@@ -102,7 +102,7 @@ public class DownjoyService extends AbstractSdkService {
 			if (result != null && sig.equalsIgnoreCase(signature)) { // 验证通过
 				if ("1".equals(result)) {
 					logger.info("{}支付成功", orderNo);
-					PayNotifyBean payNotify = new PayNotifyBean(orderNo, money, memberId);
+					PayNotifyBean payNotify = new PayNotifyBean(game, platform, orderNo, money, memberId);
 					boolean isPayOk = gameServerService.gameServerPayOk(payNotify);//进行发货
 					//处理支付发货是吧，切退款失败的订单要特殊记录，存入数据库，定时任务筛查后通知负责人。
 					if(!isPayOk && !refund(payNotify)){

@@ -35,7 +35,7 @@ public class UserTraceFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse resp,
 			FilterChain chain) throws IOException, ServletException {
 
-		
+
 		HttpServletRequest req = (HttpServletRequest) request;
 		long startTime = System.currentTimeMillis();		
 		String ip = req.getHeader("X-Real-IP");
@@ -82,7 +82,7 @@ public class UserTraceFilter implements Filter {
 			}
 			MDC.remove("traceid");
 		}
-		
+
 	}
 
 	/**
